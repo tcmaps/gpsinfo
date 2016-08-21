@@ -2,6 +2,7 @@
 
 import math
 import ephem
+import urllib
 import random
 import datetime
 from __builtin__ import int
@@ -9,8 +10,9 @@ from __builtin__ import int
 class GPSinfo:
     
     def __init__(self):
+        
+        urllib.urlretrieve ("http://www.celestrak.com/NORAD/elements/gps-ops.txt", "gps-ops.txt")
         f = open('gps-ops.txt')
-        """ http://www.celestrak.com/NORAD/elements/gps-ops.txt """
         self.satlist = []
         self.ttf = datetime.time
         self.location = ephem.Observer()
@@ -40,7 +42,7 @@ class GPSinfo:
                 s.azi = int(math.degrees(s.tle.az))
                 s.elv = int(math.degrees(s.tle.alt))
                 s.snr = s.elv * random.random() * 0.5               
-                #s.alm, s.eph, s.fix = True, True, True
+                s.alm, s.eph, s.fix = True, True, True
                 sats.append(s)
         return sats
     
